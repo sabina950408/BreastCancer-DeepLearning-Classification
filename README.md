@@ -1,20 +1,19 @@
-# BreastCancer-DeepLearning-Classification
-深度學習模型用於乳癌全玻片影像分類的研究
-
 # 基於幾何深度學習之乳癌淋巴結轉移分類系統
 # Breast Cancer Lymph Node Metastasis Classification System Based on Geometric Deep Learning
 
-![License](https://img.shields.io/badge/license-MIT-blue)
 ![Python](https://img.shields.io/badge/python-3.7+-green)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
+![Research](https://img.shields.io/badge/Research-Proprietary-red)
 
 ## 專案概述
 
 本專案提出了一套結合幾何快速資料密度泛函轉化(g-fDDFT)與深度學習的自動分類系統，針對乳癌前哨淋巴結組織病理影像進行分類。乳癌是女性最常見的癌症之一，其預後與前哨淋巴結轉移狀態高度相關。傳統的診斷方法需要病理學家耗費大量時間進行檢查，且可能漏掉體積較小的轉移細胞。本系統旨在提高診斷效率與準確性，降低人為誤差。
 
+**注意**：本專案主要作為研究成果展示，其中g-fDDFT是實驗室開發的專有技術，完整代碼不公開。本README提供研究方法與結果的詳細描述，以促進學術交流。
+
 ## 研究背景
 
-乳癌是全球女性致死的主要原因之一，早期診斷對提高存活率至關重要。在乳癌診斷過程中，前哨淋巴結的狀態是判斷癌症是否轉移的關鍵指標：
+乳癌是婦女常見的癌症之一，盡早發現是否轉移對患者的預後以及存活率非常重要：
 - 未轉移的乳癌五年存活率約為96%
 - 局部淋巴結轉移的五年存活率降至86%
 - 遠端轉移的五年存活率僅剩29%
@@ -24,18 +23,20 @@
 ## 使用的方法與技術
 
 ### 數據集
-- **CAMELYON17 Challenge**：使用包含1000張乳癌前哨淋巴結全玻片影像(WSI)的公開數據集
+**CAMELYON17 Challenge**：包含1000張乳癌前哨淋巴結全玻片影像(WSI)的公開資料庫
 - 由5家醫學機構共同提供的H&E染色病理切片數位影像
 - 訓練集500張，測試集500張，並由專家提供轉移區域的標記
 
-### 幾何快速資料密度泛函轉化 (g-fDDFT)
+### 影像預處理
+
+#### 幾何快速資料密度泛函轉化 (g-fDDFT)
 - 創新的影像處理方法，可在能量空間中對影像進行特徵強化與萃取
 - 通過動能密度泛函和位能密度泛函將影像映射到能量空間
 - 使用Fermi正交活化函數進行特徵像素子群範圍的收斂
 - 利用幾何穩定性技術解決能量流形邊緣的不連續問題
 - 使用2-stage g-fDDFT對大型WSI進行有效處理
 
-### 細胞核分割
+#### 細胞核分割
 - 使用color deconvolution將RGB色彩空間轉為H&E色彩空間
 - 對蘇木精通道進行形態學操作（侵蝕、膨脹、填充）
 - 使用分水嶺分割區分鄰近細胞核
@@ -56,50 +57,42 @@
   - 系統在降低運算時間的同時，實現了穩定可靠的分類性能
 - **實驗發現**：系統在特徵強化和效率提升方面展現出優勢，但在整體準確度方面仍有改進空間
 
-## 如何使用
+## 代碼可用性說明
 
-### 環境設定
-```bash
-pip install -r requirements.txt
-```
+**特別聲明**: 本研究中使用的幾何快速資料密度泛函轉化(g-fDDFT)是由我們實驗室專有開發的技術，完整代碼不公開分享。本專案僅提供研究方法與結果的詳細描述，以及概念性的實現思路。
 
-### 數據準備
-1. 下載CAMELYON17數據集
-2. 將WSI放置於`data/raw`目錄
+### 概念性實現
 
-### 模型訓練
-```python
-python train.py --config configs/train_config.yaml
-```
+雖然無法提供完整代碼，但以下是實現此系統的高層次流程：
 
-### 評估與預測
-```python
-python evaluate.py --model_path models/trained_model.h5 --data_path data/test
-```
+1. **WSI預處理**:
+   - 使用OpenSlide等開源庫讀取WSI
+   - 通過多重尺度分析提取關注區域
 
-## 程式碼結構
-```
-├── data/
-│   ├── raw/                # 原始WSI數據
-│   └── processed/          # 處理後的數據
-├── src/
-│   ├── g_fddft/            # g-fDDFT實現
-│   │   ├── transform.py    # 密度泛函轉化
-│   │   └── stability.py    # 幾何穩定性
-│   ├── preprocessing/      # 數據預處理
-│   │   ├── normalization.py
-│   │   └── augmentation.py
-│   ├── segmentation/       # 細胞核分割
-│   │   └── nucleus_seg.py
-│   ├── models/             # 深度學習模型
-│   │   ├── feature_extractor.py
-│   │   └── classifier.py
-│   └── utils/              # 工具函數
-├── configs/                # 配置文件
-├── train.py                # 訓練腳本
-├── evaluate.py             # 評估腳本
-└── README.md
-```
+2. **特徵增強與萃取**:
+   - 將影像轉換到能量空間進行特徵強化
+   - 在此空間中識別特徵區域邊界
+
+3. **細胞核分割**:
+   - 使用color deconvolution技術分離H&E通道
+   - 應用分水嶺和level set方法進行細胞核分割
+
+4. **分類系統**:
+   - 使用標準的ResNet-50模型提取特徵
+   - 透過LightGBM進行最終分類
+
+### 數據集
+
+本研究使用公開的CAMELYON17挑戰賽數據集，有興趣的研究者可以從官方網站獲取：
+[CAMELYON17挑戰賽](https://camelyon17.grand-challenge.org/)
+
+### 參考實現
+
+對於想要重現部分結果的研究者，以下是一些可參考的開源工具：
+- 細胞核分割可參考[histomicstk](https://github.com/DigitalSlideArchive/HistomicsTK)
+- WSI處理可使用[OpenSlide](https://openslide.org/)
+- 深度學習模型架構可參考[Keras Applications](https://keras.io/api/applications/)
+
 
 ## 未來改進方向
 
@@ -109,6 +102,16 @@ python evaluate.py --model_path models/trained_model.h5 --data_path data/test
 - 整合多種深度學習模型，進一步提升系統性能
 - 擴展系統應用範圍，探索在其他類型病理影像分析中的潛力
 
+## 科學貢獻
+
+本研究的主要科學貢獻包括：
+
+1. **效率提升**：通過創新的g-fDDFT方法，我們將處理時間縮減83.8%，顯著提高了大型WSI處理效率
+2. **特徵強化**：提出了一種基於物理能量模型的特徵強化方法，成功提升特徵表現力
+3. **分類性能**：在F1 score方面達到75%，較傳統方法提升13%，尤其在Precision方面有顯著提升
+4. **分析流程**：建立了從WSI預處理到自動分類的完整數位病理學分析流程
+5. **方法學創新**：在幾何深度學習領域提出了創新的演算法結構，為醫學影像分析提供新思路
+
 ## 相關文獻
 
 - 本研究基於作者碩士論文：李昕瑜、陳健章. "基於幾何深度學習之乳癌淋巴結轉移分類系統." 國立中央大學生物醫學工程碩士班, 2025.
@@ -116,11 +119,23 @@ python evaluate.py --model_path models/trained_model.h5 --data_path data/test
 - Chen, C.-C., et al. "Unsupervised learning and pattern recognition of biological data structures with density functional theory and machine learning," Scientific reports, 8(1), 2018, pp. 557.
 - He, K., et al. "Deep residual learning for image recognition," Proceedings of the IEEE conference on computer vision and pattern recognition, 2016, pp. 770-778.
 
+## 研究資源
+
+本研究使用的CAMELYON17數據集是公開的，研究者可以從以下資源獲取更多信息：
+
+- [CAMELYON17挑戰賽官網](https://camelyon17.grand-challenge.org/)
+- [CAMELYON17數據集論文](https://doi.org/10.1093/gigascience/giy065)
+
+此外，以下資源可能對相關研究有幫助：
+- [數位病理學開源工具集](https://digitalpathologyassociation.org/)
+- [組織病理學影像分析資源](https://www.pathologyoutlines.com/)
+
 ## 聯絡方式
 
 李昕瑜
 生物醫學工程碩士
 國立中央大學生醫科學與工程學系
 
-[Email] <!-- 在此添加你的電子郵箱 -->
-[LinkedIn] <!-- 在此添加你的LinkedIn連結 -->
+如對本研究有學術交流需求，請通過以下方式聯繫：
+- 電子郵件：[your.email@example.com] <!-- 替換為你的電子郵箱 -->
+- 研究實驗室：[實驗室網站/聯繫方式] <!-- 替換為你的實驗室聯繫方式 -->
