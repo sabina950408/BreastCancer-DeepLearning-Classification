@@ -23,10 +23,11 @@
 ## 使用的方法與技術
 
 ### 數據集
-**CAMELYON17 Challenge**：包含1000張乳癌前哨淋巴結全玻片影像(WSI)的公開資料庫
+**CAMELYON17 Challenge(https://camelyon17.grand-challenge.org/)**：包含1000張乳癌前哨淋巴結全玻片影像(WSI)的公開資料庫
 - 由5家醫學機構共同提供的H&E染色病理切片數位影像
 - 訓練集500張，測試集500張，並由專家提供轉移區域的標記
-[CAMELYON17挑戰賽](https://camelyon17.grand-challenge.org/)
+
+[CAMELYON17挑戰賽]
 
 ### 影像預處理
 
