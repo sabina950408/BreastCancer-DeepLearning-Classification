@@ -24,8 +24,7 @@
 - 訓練集500張，測試集500張，並由專家提供轉移區域的標記
 
 [CAMELYON17挑戰賽](https://camelyon17.grand-challenge.org/)
-![image](https://github.com/user-attachments/assets/98cd23a2-9532-4095-8734-fc5a8ccb44eb)
-
+![圖片9](https://github.com/user-attachments/assets/bd82b16f-3237-4478-af34-92050f1d49e4)
 
 ### 影像預處理
 
@@ -33,71 +32,49 @@
 - 使整張WSI受到均一且標準化的處理
 - 通過動能密度泛函和位能密度泛函將影像映射到能量空間
 - 在能量空間中對影像進行特徵強化與萃取
+![圖片14](https://github.com/user-attachments/assets/965aacee-a66b-46da-be90-460ffeb1d482)
 
 #### 細胞核分割
-- 將RGB色彩空間轉為H&E色彩空間
+- RGB色彩空間轉為H&E色彩空間
 - 對蘇木精通道進行形態學操作（侵蝕、膨脹、填充）
 - 使用分水嶺分割區分鄰近細胞核
 - 採用level set segmentation技術精確分割細胞核
+- ![image](https://github.com/user-attachments/assets/fdb0357c-9509-4e34-826e-15213c9e6d70)
 
 ### 分類模型
 - **特徵提取**：使用ResNet-50提取特徵
 - **資料預處理與增強**：H&E染色標準化、隨機色彩增強、隨機剪裁
+![image](https://github.com/user-attachments/assets/2fe3018b-be57-4824-bd93-088abfdf0557)
 - **特徵池化**：使用3-norm池化對特徵向量進行合併
+![image](https://github.com/user-attachments/assets/241f5c53-dc07-4a68-90b8-877438443665)
 - **分類器**：採用LightGBM進行最終分類
 
-## 主要發現與結果
+## 研究結果
 
-- **處理效率**：本系統將處理時間從12720秒縮減至2059秒，效率提升83.8%
+![image](https://github.com/user-attachments/assets/e863f15f-44e6-424b-ba21-3041da6184ae)
+- **運算效率**：本系統將分類時間從12720秒縮減至2059秒，效率提升83.8%
 - **分類表現**：
   - F1 score達到75%，較傳統方法提升13%
   - Precision達到76%，較傳統方法提升30%
   - 系統在降低運算時間的同時，實現了穩定可靠的分類性能
 - **實驗發現**：系統在特徵強化和效率提升方面展現出優勢，但在整體準確度方面仍有改進空間
 
-### 參考實現
-
-對於想要重現部分結果的研究者，以下是一些可參考的開源工具：
-- 細胞核分割可參考[histomicstk](https://github.com/DigitalSlideArchive/HistomicsTK)
-- WSI處理可使用[OpenSlide](https://openslide.org/)
-- 深度學習模型架構可參考[Keras Applications](https://keras.io/api/applications/)
-
-
 ## 未來改進方向
 
 - 提高分類準確度的同時保持高效率
 - 改進細胞核分割技術，提高邊緣清晰度和準確性
-- 探索更有效的色彩增強方法，提高模型的Recall
-- 整合多種深度學習模型，進一步提升系統性能
+- 探索更有效的色彩增強方法，以及整合多種深度學習模型，進一步提升系統性能
 - 擴展系統應用範圍，探索在其他類型病理影像分析中的潛力
 
 ## 科學貢獻
 
 本研究的主要科學貢獻包括：
 
-1. **效率提升**：通過創新的g-fDDFT方法，我們將處理時間縮減83.8%，顯著提高了大型WSI處理效率
-2. **特徵強化**：提出了一種基於物理能量模型的特徵強化方法，成功提升特徵表現力
-3. **分類性能**：在F1 score方面達到75%，較傳統方法提升13%，尤其在Precision方面有顯著提升
+1. **效率提升**：通過創新的g-fDDFT方法，將處理時間縮減83.8%，顯著提高了WSI這種大型影像的處理效率
+2. **特徵強化**：提出了一種基於能量模型的特徵強化方法，成功提升特徵表現力
+3. **分類性能**：在F1 score方面達到75%，較傳統方法提升13%
 4. **分析流程**：建立了從WSI預處理到自動分類的完整數位病理學分析流程
-5. **方法學創新**：在幾何深度學習領域提出了創新的演算法結構，為醫學影像分析提供新思路
-
-## 相關文獻
-
-- 本研究基於作者碩士論文：李昕瑜、陳健章. "基於幾何深度學習之乳癌淋巴結轉移分類系統." 國立中央大學生物醫學工程碩士班, 2025.
-- Ehteshami Bejnordi, B., et al. "Diagnostic Assessment of Deep Learning Algorithms for Detection of Lymph Node Metastases in Women With Breast Cancer," Jama, 318(22), 2017, pp. 2199-2210.
-- Chen, C.-C., et al. "Unsupervised learning and pattern recognition of biological data structures with density functional theory and machine learning," Scientific reports, 8(1), 2018, pp. 557.
-- He, K., et al. "Deep residual learning for image recognition," Proceedings of the IEEE conference on computer vision and pattern recognition, 2016, pp. 770-778.
-
-## 研究資源
-
-本研究使用的CAMELYON17數據集是公開的，研究者可以從以下資源獲取更多信息：
-
-- [CAMELYON17挑戰賽官網](https://camelyon17.grand-challenge.org/)
-- [CAMELYON17數據集論文](https://doi.org/10.1093/gigascience/giy065)
-
-此外，以下資源可能對相關研究有幫助：
-- [數位病理學開源工具集](https://digitalpathologyassociation.org/)
-- [組織病理學影像分析資源](https://www.pathologyoutlines.com/)
+5. **創新設計**：在幾何深度學習領域提出了創新的演算法結構，為醫學影像分析提供新思路
 
 ## 聯絡方式
 
@@ -105,6 +82,5 @@
 生物醫學工程碩士
 國立中央大學生醫科學與工程學系
 
-如對本研究有學術交流需求，請通過以下方式聯繫：
-- 電子郵件：[your.email@example.com] <!-- 替換為你的電子郵箱 -->
-- 研究實驗室：[實驗室網站/聯繫方式] <!-- 替換為你的實驗室聯繫方式 -->
+如對本研究有興趣或想進行學術交流，歡迎透過以下方式聯繫：
+- 電子郵件：[your.email@example.com] <!-- sabina950408@gmail.com -->
