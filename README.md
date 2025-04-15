@@ -1,15 +1,11 @@
 # 基於幾何深度學習之乳癌淋巴結轉移分類系統
 # Breast Cancer Lymph Node Metastasis Classification System Based on Geometric Deep Learning
 
-![Python](https://img.shields.io/badge/python-3.7+-green)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
-![Research](https://img.shields.io/badge/Research-Proprietary-red)
+## 概述
 
-## 專案概述
+本研究提出了一套結合幾何快速資料密度泛函轉化(g-fDDFT)與深度學習的自動分類系統，針對乳癌前哨淋巴結組織病理影像進行分類。乳癌是女性最常見的癌症之一，其預後與前哨淋巴結轉移狀態高度相關，傳統的診斷方法需要病理學家耗費大量時間進行檢查，且可能漏掉體積較小的轉移細胞。本系統旨在提高診斷效率與準確性，降低人為誤差。
 
-本專案提出了一套結合幾何快速資料密度泛函轉化(g-fDDFT)與深度學習的自動分類系統，針對乳癌前哨淋巴結組織病理影像進行分類。乳癌是女性最常見的癌症之一，其預後與前哨淋巴結轉移狀態高度相關。傳統的診斷方法需要病理學家耗費大量時間進行檢查，且可能漏掉體積較小的轉移細胞。本系統旨在提高診斷效率與準確性，降低人為誤差。
-
-**注意**：本專案主要作為研究成果展示，其中g-fDDFT是實驗室開發的專有技術，完整代碼不公開。本README提供研究方法與結果的詳細描述，以促進學術交流。
+**注意**：本專案主要作為研究成果展示，其中g-fDDFT是實驗室開發的專有技術，完整代碼不公開。
 
 ## 研究背景
 
@@ -20,7 +16,7 @@
 
 組織病理學影像分析是診斷淋巴結轉移的黃金標準，但傳統的人工檢查方法耗時且可能存在誤差。本研究通過結合幾何深度學習與電腦視覺技術，提供更高效的自動化分類解決方案。
 
-## 使用的方法與技術
+## 研究方法
 
 ### 數據集
 **CAMELYON17 Challenge**：包含1000張乳癌前哨淋巴結全玻片影像(WSI)的公開資料庫
@@ -28,6 +24,8 @@
 - 訓練集500張，測試集500張，並由專家提供轉移區域的標記
 
 [CAMELYON17挑戰賽](https://camelyon17.grand-challenge.org/)
+![image](https://github.com/user-attachments/assets/98cd23a2-9532-4095-8734-fc5a8ccb44eb)
+
 
 ### 影像預處理
 
